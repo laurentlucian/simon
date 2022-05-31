@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import Layout from './components/Layout';
 
 type Buttons = 0 | 1 | 2 | 3;
-const btnDir = [0, 270, 90, 180];
+// const btnDir = [0, 270, 90, 180];
+const btnDir = ['🡅', '🡄', '🡆', '🡇'];
 const btnColors = ['#fb6962', '#1982c4', '#34a853', '#ffca3a'];
 
 const SimonButton = ({
@@ -26,13 +27,14 @@ const SimonButton = ({
       pointerEvents={isPlayerTurn ? 'all' : 'none'}
       _focus={{ outline: 'none' }}
       _active={{ opacity: 1 }}
-      transform={`rotate(${btnDir[number]}deg)`}
+      // transform={`rotate(${btnDir[number]}deg)`}
       w={100}
       h={100}
       fontSize={60}
       borderRadius={50}
     >
-      &uarr;
+      {/* &uarr; */}
+      {btnDir[number]}
     </Button>
   );
 };
