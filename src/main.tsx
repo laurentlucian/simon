@@ -5,6 +5,8 @@ import App from './App';
 import theme from './libs/theme';
 import Particles from './libs/Particles';
 import Fonts from './libs/fonts';
+import '@fontsource/roboto-mono';
+import '@fontsource/roboto-mono/700.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

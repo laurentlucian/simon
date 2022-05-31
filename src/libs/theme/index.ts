@@ -17,8 +17,8 @@ const theme = extendTheme({
     Button: {},
   },
   fonts: {
-    heading: 'MonoLisa Bold, sans-serif',
-    body: 'MonoLisa, sans-serif',
+    heading: 'MonoLisa Bold, Roboto Mono, sans-serif',
+    body: 'MonoLisa, Roboto Mono, sans-serif',
   },
 });
 
