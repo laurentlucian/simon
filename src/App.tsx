@@ -70,7 +70,7 @@ const App = () => {
   const isPlayerTurn = delay === null && memory.length !== 0;
 
   const newPlay = (delay: number = 400) => {
-    const newMemory = [...memory, Math.floor(Math.random() * 3)];
+    const newMemory = [...memory, Math.floor(Math.random() * 4)];
     setMemory(newMemory);
     setDelay(delay);
   };
