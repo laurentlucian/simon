@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { ChakraProvider } from '@chakra-ui/react';
 import App from './App';
 import theme from './libs/theme';
-import Fonts from './libs/fonts';
+import Fonts from './libs/Fonts';
 import Particles from './libs/Particles';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
