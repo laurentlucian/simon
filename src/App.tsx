@@ -82,7 +82,7 @@ const App = () => {
   const newPlay = () => {
     const game = [...memory, Math.floor(Math.random() * 4)];
     setMemory(game);
-    setDelay(delay);
+    setDelay(speed ?? Math.floor(Math.random() * 400) + 100);
   };
 
   const play = (input: number) => {
@@ -175,6 +175,7 @@ const App = () => {
           w={120}
           onClick={() => {
             setMemory([]);
+            setLive([]);
             setDelay(null);
           }}
           sx={{
