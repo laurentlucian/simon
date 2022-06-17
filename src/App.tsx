@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, HStack, Stack, Text } from '@chakra-ui/react';
+import { Button, Flex, Heading, HStack, Input, Stack, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import Layout from './components/Layout';
 
@@ -66,20 +66,33 @@ const App = () => {
   const [delay, setDelay] = useState<number | null>(null);
   // `currentPlay` controls UI buttons.
   const [currentPlay, setCurrentPlay] = useState<number | null>(null);
-  const [speed, setSpeed] = useState(500);
+  const [speed, setSpeed] = useState<number | null>(500);
+  const [startAt, setStartAt] = useState(1);
   const isPlayerTurn = delay === null && memory.length !== 0;
 
-  const newPlay = (delay: number = 400) => {
-    const newMemory = [...memory, Math.floor(Math.random() * 4)];
-    setMemory(newMemory);
+  const newGame = () => {
+    const game = [];
+    for (let i = 0; i < startAt; i++) {
+      game.push(Math.floor(Math.random() * 4));
+    }
+    setMemory(game);
+    setDelay(speed ?? Math.floor(Math.random() * 400) + 100);
+  };
+
+  const newPlay = () => {
+    const game = [...memory, Math.floor(Math.random() * 4)];
+    setMemory(game);
     setDelay(delay);
   };
 
   const play = (input: number) => {
     setCurrentPlay(input);
-    setTimeout(() => {
-      setCurrentPlay(null);
-    }, speed - 100);
+    setTimeout(
+      () => {
+        setCurrentPlay(null);
+      },
+      speed ? speed - 100 : 400,
+    );
   };
 
   const computerTurn = () => {
@@ -91,7 +104,7 @@ const App = () => {
     }
 
     play(current);
-    setDelay(speed);
+    setDelay(speed ?? Math.floor(Math.random() * 400) + 100);
     setLive([...live, current]);
   };
 
@@ -111,9 +124,12 @@ const App = () => {
     play(input);
 
     if (nextTurns.length === 0) {
-      setTimeout(() => {
-        newPlay(speed);
-      }, speed - 100);
+      setTimeout(
+        () => {
+          newPlay();
+        },
+        speed ? speed - 100 : 400,
+      );
     }
   };
 
@@ -146,20 +162,38 @@ const App = () => {
 
   return (
     <Layout>
-      <Heading mt={10} mb={8} size="lg">
+      <Heading pt={10} pb={8} size="lg">
         Simon
       </Heading>
       {memory.length === 0 ? (
-        <Button mb={8} onClick={() => newPlay()}>
-          Start
-        </Button>
+        <HStack>
+          <Input type="number" w="70px" value={startAt} onChange={(e) => setStartAt(Number(e.currentTarget.value))} />
+          <Button onClick={newGame}>Start</Button>
+        </HStack>
       ) : (
-        <Button mb={8} disabled={true}>
-          {isPlayerTurn ? 'Your turn' : memory.length}
+        <Button
+          w={120}
+          onClick={() => {
+            setMemory([]);
+            setDelay(null);
+          }}
+          sx={{
+            ':hover': {
+              bg: '#e8635d',
+            },
+            ':hover:before': {
+              content: `"Quit"`,
+            },
+            ':hover p': {
+              display: 'none',
+            },
+          }}
+        >
+          <Text>{isPlayerTurn ? 'Your turn' : memory.length}</Text>
         </Button>
       )}
 
-      <Stack align="center" w="100%">
+      <Stack pt={10} align="center" w="100%">
         <SimonButton number={0} currentPlay={currentPlay} isPlayerTurn={isPlayerTurn} playerTurn={playerTurn} />
         <Flex justify="space-around" w="100%">
           <SimonButton number={1} currentPlay={currentPlay} isPlayerTurn={isPlayerTurn} playerTurn={playerTurn} />
@@ -177,6 +211,9 @@ const App = () => {
         </Button>
         <Button isActive={speed === 200} onClick={() => setSpeed(200)}>
           Fun
+        </Button>
+        <Button isActive={speed === null} onClick={() => setSpeed(null)}>
+          Random
         </Button>
       </HStack>
     </Layout>
